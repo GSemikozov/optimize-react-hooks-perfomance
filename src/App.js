@@ -1,23 +1,27 @@
-import React from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 
-function App() {
+import Counter from './Counter'
+
+export default function App() {
+  const [value, setValue] = useState('')
+  const [newValue, setNewValue] = useState('')
+
+  const addHello = useCallback(() => setValue(value + 'Hello!'), [value])
+  const myObject = useMemo(() => ({ key: 'myObj' }), [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <input
+        type="text"
+        onChange={e => setValue(e.target.value)}
+        value={value}
+      />
+      <input
+        type="text"
+        onChange={e => setNewValue(e.target.value)}
+        value={newValue}
+      />
+      <Counter addHello={addHello} myObject={myObject} />
     </div>
   )
 }
-
-export default App
